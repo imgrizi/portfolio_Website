@@ -1,0 +1,632 @@
+/* Fonte para títulos */
+@font-face {
+  font-family: 'FonteTitulo';
+  src: url('../fonts/LinearGrotesk-Black.woff2') format('woff2'),
+       url('../fonts/LinearGrotesk-Black.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+/*Fonte para subtítulos*/
+@font-face {
+  font-family: 'FonteSubtitulo';
+  src: url('../fonts/LinearGrotesk-Regular.woff2') format('woff2'),
+       url('../fonts/LinearGrotesk-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Fonte para o corpo de texto */
+@font-face {
+  font-family: 'FonteTexto';
+  src: url('../fonts/LinearGrotesk-Light.woff2') format('woff2'),
+       url('../fonts/LinearGrotesk-Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1, a{
+  font-family: 'FonteTitulo', sans-serif !important;
+  font-size: 3.5rem;
+  color: aliceblue;
+  text-decoration: none;
+}
+
+h2{
+font-size: 2.5rem;
+color: aliceblue;
+}
+
+h3{
+font-size: 1.5rem;
+padding: 0.5rem;
+}
+
+h2, h3, button {
+  font-family: 'FonteSubtitulo', sans-serif !important;
+  color: aliceblue;
+}
+
+p, li {
+  font-family: 'FonteTexto', sans-serif;
+  font-size: 1.3rem;
+  color: aliceblue;
+}
+
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Corpo */
+html, body {
+  height: 100%;
+  font-size: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Container principal */
+#intro-feed {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Página por seção */
+.page {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: transform 0.7s ease;
+  padding: 80px 0; /* Espaçamento superior e inferior */
+  overflow: hidden;
+}
+
+/* Cores das páginas */
+.page {
+  background:  url('../videos/ember.mp4') no-repeat center center / cover;
+  color: #fff;
+}
+
+/* Conteúdo central */
+.content {
+  opacity: 0;
+  transform: translateY(1.875rem); /* 30px */
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  text-align: center;
+  max-width: 75rem; /* 1200px */
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.page.visible .content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Container dos dots */
+.scroll-dots {
+  position: fixed;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+  opacity: 0;           /* começa invisível */
+  transition: opacity 0.4s ease;
+}
+
+/* Quando visível */
+.scroll-dots.visible {
+  opacity: 1;
+}
+
+/* Cada dot */
+.scroll-dots .dot {
+  position: relative;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: aliceblue;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border: 1px solid #65C5E1;
+}
+
+/* Dot ativo */
+.scroll-dots .dot.active {
+  background-color: #3D7DC0;
+  transform: scale(1.2);
+  border-color: #3D7DC0;
+}
+
+/* Navbar */
+
+
+/* Estado base — escondida na primeira secção */
+.navbar {
+  position: fixed;           /* garante que fica no topo sempre */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color:transparent;
+  padding: 0;
+  border: none;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.7s ease;
+  pointer-events: none;      /* não interage quando invisível */
+  text-decoration: none;
+}
+
+/* Quando aparece (a partir da 2ª secção) */
+.navbar.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.navbar.visible {
+  backdrop-filter: blur(6px) saturate(120%);
+}
+
+/* Popup de contato */
+.contact-popup {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  z-index: 1050;
+  opacity: 0;                 /* começa invisível */
+  transition: opacity 0.4s ease;
+}
+
+/* Quando visível */
+.contact-popup.visible {
+  opacity: 1;
+}
+
+/* Botão principal */
+.popup-toggle {
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #65C5E1;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Opções do popup */
+.popup-options {
+  display: none;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-bottom: 0.5rem;
+  transition: opacity 0.3s ease;
+}
+
+/* Mostrar opções quando aberto */
+.contact-popup.open .popup-options {
+  display: flex;
+}
+
+/* Botões dentro do popup */
+.popup-options .btn {
+  width: 3.125rem;
+  height: 3.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: 0.625rem;
+  font-size: 1.3em;
+  background-color: #65C5E1;
+  cursor: pointer;
+}
+
+/* Hover states */
+.popup-toggle:hover,
+.popup-options .btn:hover {
+  background-color: #65C5E1;
+  opacity: 1;
+  border: 3px solid aliceblue;
+}
+
+/*Banner*/
+
+video{
+  width: 100%;
+  height: auto;
+}
+
+.hero-desktop {
+  display: block;
+}
+
+.hero-mobile {
+  display: none;
+  
+}
+
+/*Cards*/
+.card {
+  width: 250px;
+  height: 250px;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: 'FonteSubtitulo', sans-serif;
+  font-size: 1.4rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  animation: float 4s ease-in-out infinite;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.cards-desktop {
+  display: block;
+  
+}
+
+.cards-mobile {
+  display: none;
+}
+
+/* Linha de cards no desktop */
+.cards-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2rem;
+  padding: 2rem 0;
+  position: relative;
+}
+
+.cards-row .card {
+  background-color: #0760c0;
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 350px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.5s ease;
+  animation: floatWave 4s ease-in-out infinite;
+  
+}
+
+/* --- Animação de ondulação --- */
+@keyframes floatWave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.cards-row .card {
+  animation: floatWave 4s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer; /* permite clique */
+}
+
+/* Desfasamento entre cards para o efeito onda */
+.cards-row .card:nth-child(1) { animation-delay: 0s; }
+.cards-row .card:nth-child(2) { animation-delay: 0.6s; }
+.cards-row .card:nth-child(3) { animation-delay: 1.2s; }
+.cards-row .card:nth-child(4) { animation-delay: 1.8s; }
+
+/* Hover — pausa animação e realça o card */
+.cards-row .card:hover {
+  animation-play-state: paused; /* pausa a ondulação */
+  transform: translateY(-10px) scale(1.05); /* leve destaque */
+  box-shadow: 0 15px 25px rgba(0,0,0,0.25);
+}
+
+
+.modal-title{
+  color: #65C5E1;
+}
+
+/*Image Section*/
+
+.showvert img{
+  width:15%;
+  height: auto;
+}
+
+.showhor img{
+  width:30%;
+  height: auto;
+}
+
+/*Modal Image*/
+
+.showvertmodal img{
+  width: 50%;
+  height: auto;
+}
+
+/*WebDev Section*/
+
+.carousel .carousel-control-prev,
+.carousel .carousel-control-next {
+  width: 5%;          /* área clicável das setas */
+  top: 50%;           /* centraliza verticalmente */
+  transform: translateY(-50%);
+  background: none;   /* remove fundo padrão */
+}
+
+.carousel .carousel-control-prev {
+  left: -4rem;        /* seta à esquerda do vídeo */
+}
+
+.carousel .carousel-control-next {
+  right: -4rem;       /* seta à direita do vídeo */
+}
+
+
+/*Mobile*/
+
+@media (max-width: 768px) {
+  
+  /* Fontes menores para títulos */
+  h1, a {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    padding: 0.3rem;
+  }
+
+  /* Texto e listas */
+  p, li {
+    font-size: 0.9rem;
+  }
+
+  /* Container principal */
+  #intro-feed {
+    overflow-y: auto; /* permitir scroll vertical no mobile */
+  }
+
+  .page {
+    padding: 60px 1rem; /* reduzir espaçamento lateral */
+    background-size: cover; /* ajustar GIF */
+  }
+
+  /* Conteúdo central */
+  .content {
+    max-width: 95%;
+    padding: 0 0.5rem;
+  }
+
+  /* Scroll dots */
+  .scroll-dots {
+    left: 7px;
+    gap: 8px;
+  }
+
+  .scroll-dots .dot {
+    width: 0.6rem;
+    height: 0.6rem;
+  }
+
+  .scroll-dots .dot.active {
+    transform: scale(1.1);
+  }
+
+  /* Navbar */
+  .navbar img {
+    width: 100%;
+    max-width: 150px;
+    
+  }
+
+  /* Popup de contato */
+  .contact-popup {
+    bottom: 1rem;
+    right: rem;
+    margin-bottom: 1rem;
+  }
+
+  .popup-toggle {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.2rem;
+  }
+
+  .popup-options .btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Banner: esconder desktop e mostrar mobile */
+  .hero-desktop {
+    display: none !important;
+  }
+
+  .hero-mobile {
+    display: block !important;
+  }
+
+  .hero-mobile, .hero-mobile video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 90vh; /* altura da viewport */
+    object-fit: cover; /* preenche sem distorcer */
+    z-index: -1; /* atrás do conteúdo */
+}
+
+  /*Cards*/
+.cards-desktop {
+    display: none;
+  }
+
+  .cards-mobile {
+    display: block;
+  }
+
+  .cards-container-wrapper {
+    width: 100%;
+    position: relative;
+    height: auto;
+    border-radius: 2rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .cards-container {
+    display: flex;
+    gap: 16px;
+    transition: transform 0.4s ease;
+    will-change: transform;
+    touch-action: pan-y;
+    
+  }
+
+  .cards-container .card {
+    flex: 0 0 85%;
+    max-width: 85%;
+    height: 350px;
+    background: transparent;
+    border-radius: 1.5rem;
+    box-shadow:none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'FonteSubtitulo', sans-serif;
+    font-size: 1.4rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    animation: floatMobile 5s ease-in-out infinite;
+    background-color: #0760c0;
+  }
+
+.cards-container .card img {
+  
+  width: 45%; /* ocupa toda largura do card */
+  height: auto;
+   margin:0 0 0 7.2rem;
+}
+
+ .cards-video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 10; /* acima dos cards */
+    pointer-events: none; /* impede interação */
+    opacity: 0.85; /* opcional, para deixar o conteúdo visível por baixo */
+    border-radius: 1.5rem; /* se quiseres combinar com os cards */
+  }
+
+  .cards-video-overlay.visible {
+  opacity: 0.85; /* mantém alguma transparência para ver os cards */
+  }
+
+  /*Contactos*/
+.btn{
+  margin-top: 1rem;
+}
+
+  /* Animação de flutuação vertical */
+  @keyframes floatMobile {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  /*Image Section*/
+
+.showvert img{
+  width:35%;
+  height: auto;
+}
+
+.showhor img{
+  width:70%;
+  height: auto;
+}
+
+/*Modal Image*/
+
+.showvertmodal img{
+  width: 50%;
+  height: auto;
+}
+
+/*Video Section */
+
+iframe{
+width: 100%;
+height: auto;
+
+}
+
+/*WebDev Section*/
+
+.carousel .carousel-control-prev,
+  .carousel .carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;        /* largura mínima para clicar */
+    height: 40px;       /* altura mínima */
+    
+    border-radius: 50%;
+    z-index: 10;        /* acima do iframe */
+  }
+
+  .carousel .carousel-control-prev {
+    left: -2.5rem;          /* lateral esquerda */
+  }
+
+  .carousel .carousel-control-next {
+    right: -2.5rem;         /* lateral direita */
+  }
+
+  .carousel .carousel-control-prev-icon,
+  .carousel .carousel-control-next-icon {
+    background-size: 100%, 100%;  /* ícone ocupa toda a área */
+  }
+
+  }
+
