@@ -532,7 +532,7 @@ video{
     font-size: 1.4rem;
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     animation: floatMobile 5s ease-in-out infinite;
-    background-color: #0760c0;
+    background-color: transparent;
   }
 
 .cards-container .card img {
